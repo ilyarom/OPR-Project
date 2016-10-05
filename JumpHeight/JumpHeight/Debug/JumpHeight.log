@@ -1,14 +1,16 @@
-﻿Сборка начата 13.09.2016 16:47:36.
-     1>Проект "D:\C\Programs\JumpHeight\JumpHeight\JumpHeight.vcxproj" в узле 2 (целевые объекты Build).
+﻿Сборка начата 04.10.2016 16:02:15.
+     1>Проект "D:\C\OPR\OPR-Project\JumpHeight\JumpHeight\JumpHeight.vcxproj" в узле 2 (целевые объекты Build).
      1>ClCompile:
-         D:\C\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Yu"stdafx.h" /Fp"Debug\JumpHeight.pch" /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt JumpHeight.cpp
+         D:\C\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D WIN32 /D _WINDOWS /D _DEBUG /D SFML_DYNAMIC /D "CMAKE_INTDIR=\"Debug\"" /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Yc"stdafx.h" /Fp"Debug\JumpHeight.pch" /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt stdafx.cpp
+         stdafx.cpp
+         D:\C\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D WIN32 /D _WINDOWS /D _DEBUG /D SFML_DYNAMIC /D "CMAKE_INTDIR=\"Debug\"" /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Yu"stdafx.h" /Fp"Debug\JumpHeight.pch" /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt JumpHeight.cpp
          JumpHeight.cpp
        Link:
-         D:\C\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\C\Programs\JumpHeight\Debug\JumpHeight.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"D:\C\Programs\JumpHeight\Debug\JumpHeight.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\C\Programs\JumpHeight\Debug\JumpHeight.lib" /MACHINE:X86 Debug\JumpHeight.obj
+         D:\C\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\C\OPR\OPR-Project\JumpHeight\Debug\JumpHeight.exe" /INCREMENTAL /NOLOGO "sfml-graphics-d.lib" "sfml-window-d.lib" "sfml-system-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"D:\C\OPR\OPR-Project\JumpHeight\Debug\JumpHeight.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\C\OPR\OPR-Project\JumpHeight\Debug\JumpHeight.lib" /MACHINE:X86 Debug\JumpHeight.obj
          Debug\stdafx.obj
-         JumpHeight.vcxproj -> D:\C\Programs\JumpHeight\Debug\JumpHeight.exe
-     1>Сборка проекта "D:\C\Programs\JumpHeight\JumpHeight\JumpHeight.vcxproj" завершена (целевые объекты Build).
+     1>LINK : fatal error LNK1104: не удается открыть файл "kernel32.lib"
+     1>Сборка проекта "D:\C\OPR\OPR-Project\JumpHeight\JumpHeight\JumpHeight.vcxproj" завершена (целевые объекты Build) с ошибкой.
 
-Сборка успешно завершена.
+Ошибка сборки.
 
-Затраченное время: 00:00:00.63
+Затраченное время: 00:00:01.18

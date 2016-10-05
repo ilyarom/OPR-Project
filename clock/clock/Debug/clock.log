@@ -1,0 +1,14 @@
+﻿Сборка начата 04.10.2016 23:54:21.
+     1>Проект "D:\C\OPR\OPR-Project\clock\clock\clock.vcxproj" в узле 2 (целевые объекты Build).
+     1>PreLinkEvent:
+         xcopy /e /Y "\SFML\bin\*.dll" "D:\C\OPR\OPR-Project\clock\Debug\"
+         :VCEnd
+         Не найден файл: *.dll
+         Скопировано файлов: 0.
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppCommon.targets(128,5): error MSB3073: выход из команды "xcopy /e /Y "\SFML\bin\*.dll" "D:\C\OPR\OPR-Project\clock\Debug\"
+C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppCommon.targets(128,5): error MSB3073: :VCEnd" с кодом 4.
+     1>Сборка проекта "D:\C\OPR\OPR-Project\clock\clock\clock.vcxproj" завершена (целевые объекты Build) с ошибкой.
+
+Ошибка сборки.
+
+Затраченное время: 00:00:00.61
