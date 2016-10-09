@@ -1,21 +1,22 @@
 ﻿  clock.cpp
-d:\c\programs\clock5(\clock\clock\clock.cpp(3): warning C4603: '_USE_MATH_DEFINES': macro is not defined or definition is different after precompiled header use
-  d:\c\programs\clock5(\clock\clock\clock.cpp(3): note: Add macro to precompiled header instead of defining here
-  d:\c\programs\clock5(\clock\clock\clock.cpp(4): note: use of precompiled header
-d:\c\programs\clock5(\clock\clock\clock.cpp(25): warning C4305: 'initializing': truncation from 'double' to 'float'
-d:\c\programs\clock5(\clock\clock\clock.cpp(67): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-d:\c\programs\clock5(\clock\clock\clock.cpp(68): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-d:\c\programs\clock5(\clock\clock\clock.cpp(76): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
-d:\c\programs\clock5(\clock\clock\clock.cpp(86): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
-d:\c\programs\clock5(\clock\clock\clock.cpp(90): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
-d:\c\programs\clock5(\clock\clock\clock.cpp(129): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-d:\c\programs\clock5(\clock\clock\clock.cpp(130): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-d:\c\programs\clock5(\clock\clock\clock.cpp(136): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
-d:\c\programs\clock5(\clock\clock\clock.cpp(157): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\c\programs\clock5(\clock\clock\clock.cpp(158): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\c\programs\clock5(\clock\clock\clock.cpp(159): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\c\programs\clock5(\clock\clock\clock.cpp(236): warning C4101: 'y': unreferenced local variable
-d:\c\programs\clock5(\clock\clock\clock.cpp(236): warning C4101: 'x': unreferenced local variable
+d:\c\opr\opr-project\clock\clock\clock.cpp(3): warning C4603: '_USE_MATH_DEFINES': macro is not defined or definition is different after precompiled header use
+  d:\c\opr\opr-project\clock\clock\clock.cpp(3): note: Add macro to precompiled header instead of defining here
+  d:\c\opr\opr-project\clock\clock\clock.cpp(4): note: use of precompiled header
+d:\c\opr\opr-project\clock\clock\clock.cpp(19): warning C4305: 'initializing': truncation from 'double' to 'float'
+d:\c\opr\opr-project\clock\clock\clock.cpp(61): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\c\opr\opr-project\clock\clock\clock.cpp(62): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\c\opr\opr-project\clock\clock\clock.cpp(70): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+d:\c\opr\opr-project\clock\clock\clock.cpp(80): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+d:\c\opr\opr-project\clock\clock\clock.cpp(84): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+d:\c\opr\opr-project\clock\clock\clock.cpp(123): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\c\opr\opr-project\clock\clock\clock.cpp(124): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\c\opr\opr-project\clock\clock\clock.cpp(129): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\c\opr\opr-project\clock\clock\clock.cpp(130): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+d:\c\opr\opr-project\clock\clock\clock.cpp(151): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\c\opr\opr-project\clock\clock\clock.cpp(152): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\c\opr\opr-project\clock\clock\clock.cpp(153): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\c\opr\opr-project\clock\clock\clock.cpp(210): warning C4101: 'y': unreferenced local variable
+d:\c\opr\opr-project\clock\clock\clock.cpp(210): warning C4101: 'x': unreferenced local variable
   D:\C\SFML\bin\openal32.dll
   D:\C\SFML\bin\sfml-audio-2.dll
   D:\C\SFML\bin\sfml-audio-d-2.dll
@@ -28,5 +29,5 @@ d:\c\programs\clock5(\clock\clock\clock.cpp(236): warning C4101: 'x': unreferenc
   D:\C\SFML\bin\sfml-window-2.dll
   D:\C\SFML\bin\sfml-window-d-2.dll
   Скопировано файлов: 11.
-  clock.vcxproj -> D:\C\Programs\clock5(\clock\Debug\clock.exe
-  clock.vcxproj -> D:\C\Programs\clock5(\clock\Debug\clock.pdb (Full PDB)
+  clock.vcxproj -> D:\C\OPR\OPR-Project\clock\Debug\clock.exe
+  clock.vcxproj -> D:\C\OPR\OPR-Project\clock\Debug\clock.pdb (Full PDB)

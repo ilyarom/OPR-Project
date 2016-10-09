@@ -123,10 +123,10 @@ void CreateDigits(RenderWindow &window, Clocks &clocks, Font &font)
 		x = (CLOCK_CIRCLE_SIZE - 35) * cos(angle - (PI / 3));
 		y = (CLOCK_CIRCLE_SIZE - 35) * sin(angle - (PI / 3));
 		clocks.values.digit[i].setFont(font);
-		clocks.values.digit[i].setCharacterSize(30);
+		clocks.values.digit[i].setCharacterSize(40);
 		clocks.values.digit[i].setFillColor(Color::Black);
 		clocks.values.digit[i].setString(to_string(i + 1));
-		clocks.values.digit[i].setOrigin(clocks.values.digit[i].getGlobalBounds().width / 2, clocks.values.digit[i].getGlobalBounds().height / 2);
+		clocks.values.digit[i].setOrigin(clocks.values.digit[i].getGlobalBounds().width / 1.8, clocks.values.digit[i].getGlobalBounds().height);
 		clocks.values.digit[i].setPosition(x + window.getSize().x / 2, y + window.getSize().y / 2);
 		angle = angle + ((2 * PI) / DIGIT_QUANTITY);
 	}
