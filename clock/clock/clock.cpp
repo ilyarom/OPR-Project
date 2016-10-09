@@ -3,169 +3,230 @@
 #define _USE_MATH_DEFINES
 #include "stdafx.h"
 
-
-////////////////////////////////////////////////////////////
-// Headers:
-// ctime for getting system time and
-// cmath for sin and cos functions
-////////////////////////////////////////////////////////////
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <ctime>
 #include <cmath>
 #include <iostream>
 #include <fstream>
+#include <string>
+
 using namespace sf;
-////////////////////////////////////////////////////////////
-/// Entry point of application
-///
-/// \return Application exit code
-///
-////////////////////////////////////////////////////////////
-int main()
+using namespace std;
+
+const int SCREEN_WIDTH = 800;
+const int SCREEN_HEIGHT = 600;
+const float PI = 3.1415927;
+const int CLOCK_CIRCLE_SIZE = 250;
+const int CLOCK_CIRCLE_THICKNESS = 2;
+const int DOTS_QUANTITY = 60;
+const int DIGIT_QUANTITY = 12;
+const Vector2f HOUR_HAND_SIZE = Vector2f(5, 180);
+const Vector2f MINUTE_HAND_SIZE = Vector2f(3, 240);
+const Vector2f SECONDS_HAND_SIZE = Vector2f(2, 250);
+
+struct Foundation
 {
-	// Define some variables and constants
-	const int screenWidth = 800;
-	const int screenHeight = 600;
-	const float PI = 3.1415927;
-	const int clockCircleSize = 250;
-	const int clockCircleThickness = 2;
+	CircleShape clockCircle;
+	CircleShape centerCircle;
+};
+
+struct Hands
+{
+	RectangleShape hourHand;
+	RectangleShape minuteHand;
+	RectangleShape secondsHand;
+};
+
+struct Values
+{
+	CircleShape dot[DOTS_QUANTITY];
+	Text digit[DIGIT_QUANTITY];
+};
+
+struct Clocks
+{
+	Foundation foundation;
+	Hands hands;
+	Values values;
+	Music clockTick;
+};
+
+void CreateDots(RenderWindow &window, Clocks &clocks)
+{
 	int x, y;
 	float angle = 0.0;
- 	// Set multisampling level
+	for (int i = 0; i < DOTS_QUANTITY; i++)
+	{
+		x = (CLOCK_CIRCLE_SIZE - 10) * cos(angle);
+		y = (CLOCK_CIRCLE_SIZE - 10) * sin(angle);
+
+		if (i % 5 == 0)
+			clocks.values.dot[i] = CircleShape(3);
+		else
+			clocks.values.dot[i] = CircleShape(1);
+		clocks.values.dot[i].setFillColor(Color::Black);
+		clocks.values.dot[i].setOrigin(clocks.values.dot[i].getGlobalBounds().width / 2, clocks.values.dot[i].getGlobalBounds().height / 2);
+		clocks.values.dot[i].setPosition(x + window.getSize().x / 2, y + window.getSize().y / 2);
+
+		angle = angle + ((2 * PI) / DOTS_QUANTITY);
+	}
+}
+
+void CreateClockOutline(RenderWindow &window, Clocks &clocks)
+{
+	clocks.foundation.clockCircle.setRadius(250);
+	clocks.foundation.clockCircle.setPointCount(100);
+	clocks.foundation.clockCircle.setOutlineThickness(CLOCK_CIRCLE_THICKNESS);
+	clocks.foundation.clockCircle.setOutlineColor(Color::Black);
+	clocks.foundation.clockCircle.setOrigin(clocks.foundation.clockCircle.getGlobalBounds().width / 2, clocks.foundation.clockCircle.getGlobalBounds().height / 2);
+	clocks.foundation.clockCircle.setPosition(window.getSize().x / 2 + CLOCK_CIRCLE_THICKNESS
+		, window.getSize().y / 2 + CLOCK_CIRCLE_THICKNESS);
+	clocks.foundation.clockCircle.setTextureRect(IntRect(40, 0, 500, 500));
+}
+
+void CreateCenterCircle(RenderWindow &window, Clocks &clocks, const Vector2f windowCenter)
+{
+	clocks.foundation.centerCircle.setRadius(10);
+	clocks.foundation.centerCircle.setPointCount(100);
+	clocks.foundation.centerCircle.setFillColor(Color::Red);
+	clocks.foundation.centerCircle.setOrigin(clocks.foundation.centerCircle.getGlobalBounds().width / 2, clocks.foundation.centerCircle.getGlobalBounds().height / 2);
+	clocks.foundation.centerCircle.setPosition(windowCenter);
+}
+
+void CreateHands(RenderWindow &window, Clocks &clocks, const Vector2f windowCenter)
+{
+    clocks.hands.hourHand.setSize(HOUR_HAND_SIZE);
+	clocks.hands.minuteHand.setSize(MINUTE_HAND_SIZE);
+	clocks.hands.secondsHand.setSize(SECONDS_HAND_SIZE);
+
+	clocks.hands.hourHand.setFillColor(Color::Black);
+	clocks.hands.minuteHand.setFillColor(Color::Black);
+	clocks.hands.secondsHand.setFillColor(Color::Red);
+
+	clocks.hands.hourHand.setOrigin(clocks.hands.hourHand.getGlobalBounds().width / 2, clocks.hands.hourHand.getGlobalBounds().height - 25);
+	clocks.hands.minuteHand.setOrigin(clocks.hands.minuteHand.getGlobalBounds().width / 2, clocks.hands.minuteHand.getGlobalBounds().height - 25);
+	clocks.hands.secondsHand.setOrigin(clocks.hands.secondsHand.getGlobalBounds().width / 2, clocks.hands.secondsHand.getGlobalBounds().height - 25);
+
+	clocks.hands.hourHand.setPosition(windowCenter);
+	clocks.hands.minuteHand.setPosition(windowCenter);
+	clocks.hands.secondsHand.setPosition(windowCenter);
+
+}
+
+void CreateDigits(RenderWindow &window, Clocks &clocks, Font &font)
+{
+	int x, y;
+	float angle = 0.0;
+	for (int i = 0; i < DIGIT_QUANTITY; i++)
+	{
+		x = (CLOCK_CIRCLE_SIZE - 35) * cos(angle - (PI / 3));
+		y = (CLOCK_CIRCLE_SIZE - 35) * sin(angle - (PI / 3));
+		clocks.values.digit[i].setFont(font);
+		clocks.values.digit[i].setCharacterSize(30);
+		clocks.values.digit[i].setFillColor(Color::Black);
+		clocks.values.digit[i].setString(to_string(i + 1));
+		clocks.values.digit[i].setOrigin(clocks.values.digit[i].getGlobalBounds().width / 2, clocks.values.digit[i].getGlobalBounds().height / 2);
+		clocks.values.digit[i].setPosition(x + window.getSize().x / 2, y + window.getSize().y / 2);
+		angle = angle + ((2 * PI) / DIGIT_QUANTITY);
+	}
+}
+
+void HandleEvents(RenderWindow &window)
+{
+	Event event;
+	while (window.pollEvent(event))
+	{
+		// Window closed: exit
+		if (event.type == Event::Closed)
+			window.close();
+	}
+}
+
+
+void SetTime(Clocks &clocks)
+{
+	std::time_t currentTime = std::time(NULL);
+	struct tm * ptm = localtime(&currentTime);
+	clocks.hands.hourHand.setRotation(ptm->tm_hour * 30 + (ptm->tm_min / 2));
+	clocks.hands.minuteHand.setRotation(ptm->tm_min * 6 + (ptm->tm_sec / 12));
+	clocks.hands.secondsHand.setRotation(ptm->tm_sec * 6);
+}
+
+void SetClockTick(Clocks &clocks)
+{
+	clocks.clockTick.setLoop(true);
+	clocks.clockTick.play();
+}
+
+void DrawElements(RenderWindow &window, Clocks &clocks)
+{
+	
+	window.clear(Color::White);
+	window.draw(clocks.foundation.clockCircle);
+	for (int i = 0; i < DOTS_QUANTITY; ++i)
+	{
+		window.draw(clocks.values.dot[i]);
+     	if (i < DIGIT_QUANTITY)
+		{
+			window.draw(clocks.values.digit[i]);
+		}
+	}
+
+	window.draw(clocks.hands.hourHand);
+	window.draw(clocks.hands.minuteHand);
+	window.draw(clocks.hands.secondsHand);
+	window.draw(clocks.foundation.centerCircle);
+
+	window.display();
+}
+
+
+
+void CreateClocks(RenderWindow &window, Clocks &clocks, const Vector2f windowCenter, Font &font)
+{
+	CreateDots(window, clocks);
+	CreateClockOutline(window, clocks);
+	CreateCenterCircle(window, clocks, windowCenter);
+	CreateHands(window, clocks, windowCenter);
+	CreateDigits(window, clocks, font);
+	SetClockTick(clocks);
+}
+
+void DrawClocks(RenderWindow &window, Clocks &clocks, const Vector2f windowCenter)
+{
+	while (window.isOpen())
+	{
+		HandleEvents(window);
+		SetTime(clocks);
+		DrawElements(window, clocks);
+		
+	}
+}
+
+
+int main()
+{
+	int x, y;
+	Clocks clocks;
 	ContextSettings settings;
 	settings.antialiasingLevel = 8;
 
-	// Create the window of the application
-	RenderWindow window(VideoMode(screenWidth, screenHeight), "SFML Analog Clock", Style::Close, settings);
-
-	// Define windowCenter which gets the center of the window here, right after creating window
+	
+	RenderWindow window(VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "SFML Analog Clock", Style::Close, settings);
 	Vector2f windowCenter = Vector2f(window.getSize().x / 2.0f, window.getSize().y / 2.0f);
 
-	// Create a list for clock's dots
-	CircleShape dot[60];
-
-	// Create dots and place them to very right positions
-	for (int i = 0; i<60; i++)
-	{
-		x = (clockCircleSize - 10) * cos(angle);
-		y = (clockCircleSize - 10) * sin(angle);
-
-		if (i % 5 == 0)
-			dot[i] = CircleShape(3);
-		else
-			dot[i] = CircleShape(1);
-		dot[i].setFillColor(Color::Black);
-		dot[i].setOrigin(dot[i].getGlobalBounds().width / 2, dot[i].getGlobalBounds().height / 2);
-		dot[i].setPosition(x + window.getSize().x / 2, y + window.getSize().y / 2);
-
-		angle = angle + ((2 * PI) / 60);
-	}
-	// Create outline of the clock
-	CircleShape clockCircle(clockCircleSize);
-
-	clockCircle.setPointCount(100);
-	clockCircle.setOutlineThickness(clockCircleThickness);
-	clockCircle.setOutlineColor(Color::Black);
-	clockCircle.setOrigin(clockCircle.getGlobalBounds().width / 2, clockCircle.getGlobalBounds().height / 2);
-	clockCircle.setPosition(window.getSize().x / 2 + clockCircleThickness, window.getSize().y / 2 + clockCircleThickness);
-
-	// Crate another circle for center
-	CircleShape centerCircle(10);
-
-	centerCircle.setPointCount(100);
-	centerCircle.setFillColor(Color::Red);
-	centerCircle.setOrigin(centerCircle.getGlobalBounds().width / 2, centerCircle.getGlobalBounds().height / 2);
-	centerCircle.setPosition(windowCenter);
-
-	// Create hour, minute, and seconds hands
-	RectangleShape hourHand(Vector2f(5, 180));
-	RectangleShape minuteHand(Vector2f(3, 240));
-	RectangleShape secondsHand(Vector2f(2, 250));
-
-	hourHand.setFillColor(Color::Black);
-	minuteHand.setFillColor(Color::Black);
-	secondsHand.setFillColor(Color::Red);
-
-	hourHand.setOrigin(hourHand.getGlobalBounds().width / 2, hourHand.getGlobalBounds().height - 25);
-	minuteHand.setOrigin(minuteHand.getGlobalBounds().width / 2, minuteHand.getGlobalBounds().height - 25);
-	secondsHand.setOrigin(secondsHand.getGlobalBounds().width / 2, secondsHand.getGlobalBounds().height - 25);
-
-	hourHand.setPosition(windowCenter);
-	minuteHand.setPosition(windowCenter);
-	secondsHand.setPosition(windowCenter);
-
-	// Create sound effect
-	Music clockTick;
-	if (!clockTick.openFromFile("resources/clock-1.wav"))
-		return EXIT_FAILURE;
-	clockTick.setLoop(true);
-	clockTick.play();
-
-	// Use a part of SFML logo as clock brand
-	Texture clockBrand;
-	if (!clockBrand.loadFromFile("resources/clock-brand.png"))
+	Font font;
+	if (!font.loadFromFile("fonts/times.ttf"))
 	{
 		return EXIT_FAILURE;
 	}
-
-	Sprite clockBrandSprite;
-	clockBrandSprite.setTexture(clockBrand);
-	clockBrandSprite.setOrigin(clockBrandSprite.getTextureRect().left + clockBrandSprite.getTextureRect().width / 2.0f,
-		clockBrandSprite.getTextureRect().top + clockBrandSprite.getTextureRect().height / 2.0f);
-
-	clockBrandSprite.setPosition(window.getSize().x / 2, window.getSize().y - 100);
-
-
-	// Create clock background
-	Texture clockImage;
-	if (!clockImage.loadFromFile("resources/clock-image.png"))
+	if (!clocks.clockTick.openFromFile("resources/clock-1.wav"))
 	{
 		return EXIT_FAILURE;
 	}
-
-	clockCircle.setTexture(&clockImage);
-	clockCircle.setTextureRect(IntRect(40, 0, 500, 500));
-
-	while (window.isOpen())
-	{
-		// Handle events
-		Event event;
-		while (window.pollEvent(event))
-		{
-			// Window closed: exit
-			if (event.type == Event::Closed)
-				window.close();
-		}
-
-		// Get system time
-		std::time_t currentTime = std::time(NULL);
-		struct tm * ptm = nullptr;
-		localtime_s(ptm, &currentTime);
-		hourHand.setRotation(ptm->tm_hour * 30 + (ptm->tm_min / 2));
-		minuteHand.setRotation(ptm->tm_min * 6 + (ptm->tm_sec / 12));
-		secondsHand.setRotation(ptm->tm_sec * 6);
-
-		// Clear the window
-		window.clear(Color::White);
-
-		// Draw all parts of clock
-		window.draw(clockCircle);
-
-		for (int i = 0; i<60; i++)
-		{
-			window.draw(dot[i]);
-		}
-
-		window.draw(clockBrandSprite);
-		window.draw(hourHand);
-		window.draw(minuteHand);
-		window.draw(secondsHand);
-		window.draw(centerCircle);
-
-		// Display things on screen
-		window.display();
-	}
+	CreateClocks(window, clocks, windowCenter, font);
+	DrawClocks(window, clocks, windowCenter);
 
 	return EXIT_SUCCESS;
 }
