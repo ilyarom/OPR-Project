@@ -1,0 +1,39 @@
+﻿  Minigame.cpp
+d:\c\opr\opr-project\minigame\minigame\minigame.cpp(31): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+d:\c\opr\opr-project\minigame\minigame\minigame.cpp(34): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+d:\c\opr\opr-project\minigame\minigame\minigame.cpp(35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\c\opr\opr-project\minigame\minigame\minigame.cpp(122): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\c\vc\include\xutility(2766): warning C4800: 'const int': forcing value to bool 'true' or 'false' (performance warning)
+  d:\c\vc\include\xutility(2780): note: see reference to function template instantiation 'void std::_Fill_unchecked1<_FwdIt,_Ty>(_FwdIt,_FwdIt,const _Ty &,std::false_type)' being compiled
+          with
+          [
+              _FwdIt=bool *,
+              _Ty=int
+          ]
+  d:\c\vc\include\xutility(2788): note: see reference to function template instantiation 'void std::_Fill_unchecked<_Iter,_Ty>(_FwdIt,_FwdIt,const _Ty &)' being compiled
+          with
+          [
+              _Iter=bool *,
+              _Ty=int,
+              _FwdIt=bool *
+          ]
+  d:\c\opr\opr-project\minigame\minigame\minigame.cpp(138): note: see reference to function template instantiation 'void std::fill<bool*,int>(_FwdIt,_FwdIt,const _Ty &)' being compiled
+          with
+          [
+              _FwdIt=bool *,
+              _Ty=int
+          ]
+  D:\C\SFML\bin\openal32.dll
+  D:\C\SFML\bin\sfml-audio-2.dll
+  D:\C\SFML\bin\sfml-audio-d-2.dll
+  D:\C\SFML\bin\sfml-graphics-2.dll
+  D:\C\SFML\bin\sfml-graphics-d-2.dll
+  D:\C\SFML\bin\sfml-network-2.dll
+  D:\C\SFML\bin\sfml-network-d-2.dll
+  D:\C\SFML\bin\sfml-system-2.dll
+  D:\C\SFML\bin\sfml-system-d-2.dll
+  D:\C\SFML\bin\sfml-window-2.dll
+  D:\C\SFML\bin\sfml-window-d-2.dll
+  Скопировано файлов: 11.
+  Minigame.vcxproj -> D:\C\OPR\OPR-Project\Minigame\Debug\Minigame.exe
+  Minigame.vcxproj -> D:\C\OPR\OPR-Project\Minigame\Debug\Minigame.pdb (Full PDB)

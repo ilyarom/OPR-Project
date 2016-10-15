@@ -1,0 +1,19 @@
+﻿  Game.cpp
+d:\c\opr\opr-project\game\game\game.cpp(42): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+d:\c\opr\opr-project\game\game\game.cpp(51): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+d:\c\opr\opr-project\game\game\game.cpp(69): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+d:\c\opr\opr-project\game\game\game.cpp(69): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  D:\C\SFML\bin\openal32.dll
+  D:\C\SFML\bin\sfml-audio-2.dll
+  D:\C\SFML\bin\sfml-audio-d-2.dll
+  D:\C\SFML\bin\sfml-graphics-2.dll
+  D:\C\SFML\bin\sfml-graphics-d-2.dll
+  D:\C\SFML\bin\sfml-network-2.dll
+  D:\C\SFML\bin\sfml-network-d-2.dll
+  D:\C\SFML\bin\sfml-system-2.dll
+  D:\C\SFML\bin\sfml-system-d-2.dll
+  D:\C\SFML\bin\sfml-window-2.dll
+  D:\C\SFML\bin\sfml-window-d-2.dll
+  Скопировано файлов: 11.
+  Game.vcxproj -> D:\C\OPR\OPR-Project\Game\Game\Debug\Game.exe
+  Game.vcxproj -> D:\C\OPR\OPR-Project\Game\Game\Debug\Game.pdb (Full PDB)
