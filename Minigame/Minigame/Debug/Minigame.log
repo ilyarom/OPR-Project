@@ -1,9 +1,4 @@
-﻿  Minigame.cpp
-d:\c\opr\opr-project\minigame\minigame\minigame.cpp(51): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
-d:\c\opr\opr-project\minigame\minigame\minigame.cpp(54): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
-d:\c\opr\opr-project\minigame\minigame\minigame.cpp(55): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\c\opr\opr-project\minigame\minigame\minigame.cpp(142): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  D:\C\SFML\bin\openal32.dll
+﻿  D:\C\SFML\bin\openal32.dll
   D:\C\SFML\bin\sfml-audio-2.dll
   D:\C\SFML\bin\sfml-audio-d-2.dll
   D:\C\SFML\bin\sfml-graphics-2.dll
