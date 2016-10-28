@@ -132,7 +132,7 @@ void CreateFieldValues(Sapper &sapper)
 
 void CreateDigits(Sapper &sapper)
 {
-	int posX = (SCREEN_WIDTH / 2) - (sapper.cells.squaresX * (SQUARE_SIZE + OUTLINE_SIZE) / 2) + 3;
+	int posX = (SCREEN_WIDTH / 2) - (sapper.cells.squaresX * (SQUARE_SIZE + OUTLINE_SIZE) / 2);
 	int posY = (SCREEN_HEIGHT / 2) - (sapper.cells.squaresY * (SQUARE_SIZE + OUTLINE_SIZE) / 2);
 	for (int i = 0; i < sapper.fieldSize; i++)
 	{
@@ -235,6 +235,93 @@ void CheckNearNulls(Sapper &sapper, int i)
 	}
 }
 
+void Click(RenderWindow &window, Sapper &sapper, Event &event, bool &isGameEnd)
+{
+	int posX = (SCREEN_WIDTH / 2) - (sapper.cells.squaresX * (SQUARE_SIZE + OUTLINE_SIZE) / 2);
+	int posY = (SCREEN_HEIGHT / 2) - (sapper.cells.squaresY * (SQUARE_SIZE + OUTLINE_SIZE) / 2);
+	for (int i = 0; i < sapper.fieldSize; i++)
+	{
+		if (event.mouseButton.x <= posX + SQUARE_SIZE && event.mouseButton.x >= posX && event.mouseButton.y <= posY + SQUARE_SIZE && event.mouseButton.y >= posY)
+		{
+			sapper.clickedNumbers[i] = true;
+			if (sapper.matrix[i] == "0")
+			{
+				CheckNearNulls(sapper, i);
+			}
+			if (sapper.matrix[i] == "*")
+			{
+				cout << "Игра проиграна. Попробуйте ещё раз\nНажмите R чтобы начать заново\n";
+				isGameEnd = true;
+			}
+			break;
+		}
+		posX = posX + SQUARE_SIZE + OUTLINE_SIZE;
+		if ((i + 1) % sapper.cells.squaresX == 0)
+		{
+			posY = posY + SQUARE_SIZE + OUTLINE_SIZE;
+			posX = posX - (SQUARE_SIZE * sapper.cells.squaresX) - (OUTLINE_SIZE * sapper.cells.squaresX);
+		}
+	}
+}
+
+void SetFlag(RenderWindow &window, Sapper &sapper, Event &event, bool &isGameEnd, int &checkedBombs, int &checkedCells)
+{
+	int posX = (SCREEN_WIDTH / 2) - (sapper.cells.squaresX * (SQUARE_SIZE + OUTLINE_SIZE) / 2);
+	int posY = (SCREEN_HEIGHT / 2) - (sapper.cells.squaresY * (SQUARE_SIZE + OUTLINE_SIZE) / 2);
+	for (int i = 0; i < sapper.fieldSize; i++)
+	{
+		if ((event.mouseButton.x <= posX + SQUARE_SIZE && event.mouseButton.x >= posX && event.mouseButton.y <= posY + SQUARE_SIZE && event.mouseButton.y >= posY) && (!sapper.clickedNumbers[i]))
+		{
+			if (sapper.flags[i])
+			{
+				sapper.flags[i] = false;
+				sapper.values[i].setString(sapper.matrix[i]);
+				--checkedCells;
+				if (sapper.matrix[i] == "*")
+				{
+					checkedBombs--;
+				}
+			}
+			else
+			{
+				sapper.flags[i] = true;
+				++checkedCells;
+				if (sapper.matrix[i] == "*")
+				{
+					checkedBombs++;
+					if ((checkedBombs == sapper.numOfBombs) && (checkedBombs == checkedCells))
+					{
+						cout << "Вы победили! Поздравляю!\nНажмите R чтобы сыграть ещё раз\n";
+						sapper.values[i].setString("P");
+						isGameEnd = true;
+					}
+				}
+				sapper.values[i].setString("P");
+			}
+			break;
+		}
+		posX = posX + SQUARE_SIZE + OUTLINE_SIZE;
+		if ((i + 1) % sapper.cells.squaresX == 0)
+		{
+			posY = posY + SQUARE_SIZE + OUTLINE_SIZE;
+			posX = posX - (SQUARE_SIZE * sapper.cells.squaresX) - (OUTLINE_SIZE * sapper.cells.squaresX);
+		}
+	}
+}
+
+void Restart(Sapper &sapper)
+{
+	for (int i = 0; i < sapper.fieldSize; ++i)
+	{
+		sapper.clickedNumbers[i] = false;
+		sapper.flags[i] = false;
+		sapper.matrix[i] = "0";
+		sapper.processedCells[i] = false;
+	}
+	CreateField(sapper);
+	CreateFieldValues(sapper);
+	CreateDigits(sapper);
+}
 
 void ProcessGame(RenderWindow &window, Sapper &sapper)
 {
@@ -246,7 +333,7 @@ void ProcessGame(RenderWindow &window, Sapper &sapper)
 	{
 		window.clear(Color::White);
 		Event event;
-		int posX = (SCREEN_WIDTH / 2) - (sapper.cells.squaresX * (SQUARE_SIZE + OUTLINE_SIZE) / 2) + 3;
+		int posX = (SCREEN_WIDTH / 2) - (sapper.cells.squaresX * (SQUARE_SIZE + OUTLINE_SIZE) / 2);
 		int posY = (SCREEN_HEIGHT / 2) - (sapper.cells.squaresY * (SQUARE_SIZE + OUTLINE_SIZE) / 2);
 		while (window.pollEvent(event))
 		{
@@ -254,88 +341,19 @@ void ProcessGame(RenderWindow &window, Sapper &sapper)
 			{
 				if (event.mouseButton.button == sf::Mouse::Left)
 				{
-					for (int i = 0; i < sapper.fieldSize; i++)
-					{
-						if (event.mouseButton.x <= posX + SQUARE_SIZE && event.mouseButton.x >= posX && event.mouseButton.y <= posY + SQUARE_SIZE && event.mouseButton.y >= posY)
-						{
-							sapper.clickedNumbers[i] = true;
-							if (sapper.matrix[i] == "0")
-							{
-								CheckNearNulls(sapper, i);
-							} 
-							if (sapper.matrix[i] == "*")
-							{
-								cout << "Игра проиграна. Попробуйте ещё раз\nНажмите R чтобы начать заново\n";
-								isGameEnd = true;
-							}
-							break;
-						}
-						posX = posX + SQUARE_SIZE + OUTLINE_SIZE;
-						if ((i + 1) % sapper.cells.squaresX == 0)
-						{
-							posY = posY + SQUARE_SIZE + OUTLINE_SIZE;
-							posX = posX - (SQUARE_SIZE * sapper.cells.squaresX) - (OUTLINE_SIZE * sapper.cells.squaresX);
-						}
-					}
+					Click(window, sapper, event, isGameEnd);
 				}
 				else if (event.mouseButton.button == sf::Mouse::Right)
 				{
-					for (int i = 0; i < sapper.fieldSize; i++)
-					{
-						if ((event.mouseButton.x <= posX + SQUARE_SIZE && event.mouseButton.x >= posX && event.mouseButton.y <= posY + SQUARE_SIZE && event.mouseButton.y >= posY) && (!sapper.clickedNumbers[i]))
-						{
-							if (sapper.flags[i])
-							{
-								sapper.flags[i] = false;
-								sapper.values[i].setString(sapper.matrix[i]);
-								--checkedCells;
-								if (sapper.matrix[i] == "*")
-								{
-									checkedBombs--;
-								}
-							}
-							else
-							{
-								sapper.flags[i] = true;
-								++checkedCells;
-								if (sapper.matrix[i] == "*")
-								{
-									checkedBombs++;
-									if ((checkedBombs == sapper.numOfBombs) && (checkedBombs == checkedCells))
-									{
-										cout << "Вы победили! Поздравляю!\nНажмите R чтобы сыграть ещё раз\n";
-										sapper.values[i].setString("P");
-										isGameEnd = true;
-									}
-								}
-								sapper.values[i].setString("P");
-							}
-							break;
-						}
-						posX = posX + SQUARE_SIZE + OUTLINE_SIZE;
-						if ((i + 1) % sapper.cells.squaresX == 0)
-						{
-							posY = posY + SQUARE_SIZE + OUTLINE_SIZE;
-							posX = posX - (SQUARE_SIZE * sapper.cells.squaresX) - (OUTLINE_SIZE * sapper.cells.squaresX);
-						}
-					}
+					SetFlag(window, sapper, event, isGameEnd, checkedBombs, checkedCells);
 				}
 			}
 			if (event.type == sf::Event::KeyPressed)
 			{
 				if (event.key.code == sf::Keyboard::R)
 				{
-					for (int i = 0; i < sapper.fieldSize; ++i)
-					{
-						sapper.clickedNumbers[i] = false;
-						sapper.flags[i] = false;
-						sapper.matrix[i] = "0";
-						sapper.processedCells[i] = false;
-					}
-					CreateField(sapper);
-					CreateFieldValues(sapper);
-					CreateDigits(sapper);
-					ProcessGame(window, sapper);
+					Restart(sapper);
+					return;
 				}
 			}
 			if (event.type == Event::Closed)
@@ -401,7 +419,10 @@ int main()
 		return EXIT_FAILURE;
 	}
 	CreateDigits(sapper);
-	ProcessGame(window, sapper);
+	while (true)
+	{
+		ProcessGame(window, sapper);
+	}
     return 0;
 }
 

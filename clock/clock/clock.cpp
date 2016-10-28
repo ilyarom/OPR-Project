@@ -21,6 +21,8 @@ const int CLOCK_CIRCLE_SIZE = 250;
 const int CLOCK_CIRCLE_THICKNESS = 2;
 const int DOTS_QUANTITY = 60;
 const int DIGIT_QUANTITY = 12;
+const int NUMBER_PADDING = 45;
+const int DOT_PADDING = 10;
 const Vector2f HOUR_HAND_SIZE = Vector2f(5, 180);
 const Vector2f MINUTE_HAND_SIZE = Vector2f(3, 240);
 const Vector2f SECONDS_HAND_SIZE = Vector2f(2, 250);
@@ -58,8 +60,8 @@ void CreateDots(RenderWindow &window, Clocks &clocks)
 	float angle = 0.0;
 	for (int i = 0; i < DOTS_QUANTITY; i++)
 	{
-		x = (CLOCK_CIRCLE_SIZE - 10) * cos(angle);
-		y = (CLOCK_CIRCLE_SIZE - 10) * sin(angle);
+		x = (CLOCK_CIRCLE_SIZE - DOT_PADDING) * cos(angle);
+		y = (CLOCK_CIRCLE_SIZE - DOT_PADDING) * sin(angle);
 
 		if (i % 5 == 0)
 			clocks.values.dot[i] = CircleShape(3);
@@ -116,12 +118,13 @@ void CreateHands(RenderWindow &window, Clocks &clocks, const Vector2f windowCent
 
 void CreateDigits(RenderWindow &window, Clocks &clocks, Font &font)
 {
-	int x, y;
+	int x;
+	int y;
 	float angle = 0.0;
 	for (int i = 0; i < DIGIT_QUANTITY; i++)
 	{
-		x = (CLOCK_CIRCLE_SIZE - 35) * cos(angle - (PI / 3));
-		y = (CLOCK_CIRCLE_SIZE - 35) * sin(angle - (PI / 3));
+		x = (CLOCK_CIRCLE_SIZE - NUMBER_PADDING) * cos(angle - (PI / 3));
+		y = (CLOCK_CIRCLE_SIZE - NUMBER_PADDING) * sin(angle - (PI / 3));
 		clocks.values.digit[i].setFont(font);
 		clocks.values.digit[i].setCharacterSize(40);
 		clocks.values.digit[i].setFillColor(Color::Black);
@@ -144,7 +147,7 @@ void HandleEvents(RenderWindow &window)
 }
 
 
-void SetTime(Clocks &clocks)
+void DetermineTime(Clocks &clocks)
 {
 	std::time_t currentTime = std::time(NULL);
 	struct tm * ptm = localtime(&currentTime);
@@ -161,7 +164,6 @@ void SetClockTick(Clocks &clocks)
 
 void DrawElements(RenderWindow &window, Clocks &clocks)
 {
-	
 	window.clear(Color::White);
 	window.draw(clocks.foundation.clockCircle);
 	for (int i = 0; i < DOTS_QUANTITY; ++i)
@@ -193,12 +195,12 @@ void CreateClocks(RenderWindow &window, Clocks &clocks, const Vector2f windowCen
 	SetClockTick(clocks);
 }
 
-void DrawClocks(RenderWindow &window, Clocks &clocks, const Vector2f windowCenter)
+void DisplayClocks(RenderWindow &window, Clocks &clocks, const Vector2f windowCenter)
 {
 	while (window.isOpen())
 	{
 		HandleEvents(window);
-		SetTime(clocks);
+		DetermineTime(clocks);
 		DrawElements(window, clocks);
 		
 	}
@@ -207,7 +209,8 @@ void DrawClocks(RenderWindow &window, Clocks &clocks, const Vector2f windowCente
 
 int main()
 {
-	int x, y;
+	int x;
+	int y;
 	Clocks clocks;
 	ContextSettings settings;
 	settings.antialiasingLevel = 8;
@@ -226,7 +229,7 @@ int main()
 		return EXIT_FAILURE;
 	}
 	CreateClocks(window, clocks, windowCenter, font);
-	DrawClocks(window, clocks, windowCenter);
+	DisplayClocks(window, clocks, windowCenter);
 
 	return EXIT_SUCCESS;
 }
