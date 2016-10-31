@@ -323,6 +323,19 @@ void Restart(Sapper &sapper)
 	CreateDigits(sapper);
 }
 
+void DrawField(Sapper &sapper, RenderWindow &window)
+{
+	for (int i = 0; i < sapper.fieldSize; ++i)
+	{
+		window.draw(sapper.field[i]);
+		if (sapper.clickedNumbers[i] || sapper.flags[i])
+		{
+			window.draw(sapper.values[i]);
+		}
+	}
+	window.display();
+}
+
 void ProcessGame(RenderWindow &window, Sapper &sapper)
 {
 	bool isGameEnd = false;
@@ -361,15 +374,7 @@ void ProcessGame(RenderWindow &window, Sapper &sapper)
 				window.close();
 			}
 		}
-		for (int i = 0; i < sapper.fieldSize; ++i)
-		{
-			window.draw(sapper.field[i]);
-			if (sapper.clickedNumbers[i] || sapper.flags[i])
-			{
-				window.draw(sapper.values[i]);
-			}
-		}
-		window.display();
+		DrawField(sapper, window);
 	}
 }
 
