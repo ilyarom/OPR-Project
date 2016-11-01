@@ -1,6 +1,5 @@
 // Clock.cpp: определяет точку входа для консольного приложения.
 //
-#define _USE_MATH_DEFINES
 #include "stdafx.h"
 
 #include <SFML/Graphics.hpp>
@@ -16,7 +15,6 @@ using namespace std;
 
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
-const float PI = 3.1415927;
 const int CLOCK_CIRCLE_SIZE = 250;
 const int CLOCK_CIRCLE_THICKNESS = 2;
 const int DOTS_QUANTITY = 60;
@@ -56,12 +54,11 @@ struct Clocks
 
 void CreateDots(RenderWindow &window, Clocks &clocks)
 {
-	int x, y;
 	float angle = 0.0;
 	for (int i = 0; i < DOTS_QUANTITY; i++)
 	{
-		x = (CLOCK_CIRCLE_SIZE - DOT_PADDING) * cos(angle);
-		y = (CLOCK_CIRCLE_SIZE - DOT_PADDING) * sin(angle);
+		int x = (CLOCK_CIRCLE_SIZE - DOT_PADDING) * cos(angle);
+		int y = (CLOCK_CIRCLE_SIZE - DOT_PADDING) * sin(angle);
 
 		if (i % 5 == 0)
 			clocks.values.dot[i] = CircleShape(3);
@@ -71,7 +68,7 @@ void CreateDots(RenderWindow &window, Clocks &clocks)
 		clocks.values.dot[i].setOrigin(clocks.values.dot[i].getGlobalBounds().width / 2, clocks.values.dot[i].getGlobalBounds().height / 2);
 		clocks.values.dot[i].setPosition(x + window.getSize().x / 2, y + window.getSize().y / 2);
 
-		angle = angle + ((2 * PI) / DOTS_QUANTITY);
+		angle = angle + ((2 * M_PI) / DOTS_QUANTITY);
 	}
 }
 
@@ -118,20 +115,18 @@ void CreateHands(RenderWindow &window, Clocks &clocks, const Vector2f windowCent
 
 void CreateDigits(RenderWindow &window, Clocks &clocks, Font &font)
 {
-	int x;
-	int y;
 	float angle = 0.0;
 	for (int i = 0; i < DIGIT_QUANTITY; i++)
 	{
-		x = (CLOCK_CIRCLE_SIZE - NUMBER_PADDING) * cos(angle - (PI / 3));
-		y = (CLOCK_CIRCLE_SIZE - NUMBER_PADDING) * sin(angle - (PI / 3));
+		int x = (CLOCK_CIRCLE_SIZE - NUMBER_PADDING) * cos(angle - (M_PI / 3));
+		int y = (CLOCK_CIRCLE_SIZE - NUMBER_PADDING) * sin(angle - (M_PI / 3));
 		clocks.values.digit[i].setFont(font);
 		clocks.values.digit[i].setCharacterSize(40);
 		clocks.values.digit[i].setFillColor(Color::Black);
 		clocks.values.digit[i].setString(to_string(i + 1));
 		clocks.values.digit[i].setOrigin(clocks.values.digit[i].getGlobalBounds().width / 1.8, clocks.values.digit[i].getGlobalBounds().height);
 		clocks.values.digit[i].setPosition(x + window.getSize().x / 2, y + window.getSize().y / 2);
-		angle = angle + ((2 * PI) / DIGIT_QUANTITY);
+		angle = angle + ((2 * M_PI) / DIGIT_QUANTITY);
 	}
 }
 
@@ -209,8 +204,6 @@ void DisplayClocks(RenderWindow &window, Clocks &clocks, const Vector2f windowCe
 
 int main()
 {
-	int x;
-	int y;
 	Clocks clocks;
 	ContextSettings settings;
 	settings.antialiasingLevel = 8;
